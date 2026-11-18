@@ -6,7 +6,7 @@ This uses the [mkosi 25.3](https://packages.debian.org/trixie/mkosi) and [ukify 
 
 ## Development
 
-Install the [debian-13-uefi-amd64](github.com/rgl/debian-vagrant) vagrant box.
+Install the [debian-13-uefi-amd64](https://github.com/rgl/debian-vagrant) vagrant box.
 
 Create the UKI:
 
@@ -41,9 +41,11 @@ qemu-system-x86_64 \
     -drive if=pflash,format=raw,unit=0,file=/usr/share/OVMF/OVMF_CODE_4M.fd,readonly=on \
     -drive if=pflash,format=raw,unit=1,file=OVMF_VARS_4M.fd \
     -drive if=virtio,format=raw,file=fat:boot,readonly=on \
-    -nic user
+    -nic user,model=virtio,hostfwd=tcp::2022-:22
 # hop to the vm console and login as root with the vagrant password.
 # then execute the following commands.
+cat /etc/os-release
+uname -a
 timedatectl status
 networkctl status
 resolvectl status
@@ -51,12 +53,17 @@ systemctl status
 systemctl status hello-world
 journalctl -u hello-world
 ip addr
+resolvectl query ip6.me
 curl http://ip4only.me/api/ # get the vm public ipv4 address.
 curl http://ip6only.me/api/ # get the vm public ipv6 address.
 curl -4 http://ip6.me/api/  # get the vm public ipv4 address.
 curl -6 http://ip6.me/api/  # get the vm public ipv6 address.
-# hop back to the terminal that is running qemu-system-x86_64, press ctrl+c to
-# terminate the vm, then execute the following commands.
+# hop to a new terminal on the host machine, then execute the following
+# commands.
+ssh root@localhost -p 2022
+exit
+# hop back to the host terminal that is running qemu-system-x86_64, press ctrl+c
+# to terminate the vm, then execute the following commands.
 popd
 ```
 
