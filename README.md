@@ -1,6 +1,6 @@
 # About
 
-A Debian UEFI Unified Kernel Image (UKI) example.
+A Debian Unified Kernel Image (UKI) example.
 
 This uses the [mkosi 25.3](https://packages.debian.org/trixie/mkosi) and [ukify 257](https://packages.debian.org/trixie/systemd-ukify) Debian 13 (Trixie) packages.
 
